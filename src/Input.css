@@ -1,0 +1,250 @@
+.dropdown-triangle {
+    position: relative;
+    fill: #F1F2F2;
+    height: 7px;
+    bottom: 2px;
+}
+
+.dropdown-hitbox {
+    transform: rotate(180deg);
+    text-align: center;
+    position: relative;
+    bottom: 25px;
+    left: 90%;
+    width: 40px;
+    height: 25px;
+}
+
+.header > h1 {
+    text-align: left;
+    padding: 0;
+    font-size: 120%;
+    color: #E9F1F2;
+}
+
+.input-row {
+    margin-top: 5%;
+    height: 30px;
+    position: relative;
+}
+
+.input-row > input {
+    border: 0;
+    padding-left: 2%;
+    padding-right: 5%;
+    background-color: transparent;
+    font-size: 100%;
+    color: #F1F2F2;
+}
+
+.input-row > input:focus-visible {
+    outline: none;
+    background: gray;
+    background-clip: content-box;
+}
+
+.variations {
+    position: relative;
+    text-align: center;
+    height: fit-content;
+    margin-right: 4%;
+    padding: 10px 0 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background: rgb(131,58,180);
+    background: linear-gradient(145deg, rgba(131,58,180,1) 0%, rgba(55,31,88,1) 100%);
+}
+
+.variations > input {
+    border: 0;
+    /* padding-left: 0;
+    padding-right: 5%; */
+    font-size: 100%;
+    color: #F1F2F2;
+}
+
+.add-variation{
+    padding-left: 6.5%;
+    padding-right: 6.5%;
+    width: 100%;
+    background: #371F57;
+}
+
+.add-variation:focus-visible {
+    outline: none;
+    background: gray;
+    background-clip: content-box;
+}
+
+.add-hitbox {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 40px;
+    height: 25px;
+    padding-top: 17px;
+}
+
+.add-icon {
+    float: right;
+    fill:#F1F2F2;
+    height: 8px;
+}
+
+.add-icon-inner {
+    fill:#F1F2F2;
+}
+
+.reps-by-set {
+    padding: 1% 2.1%;
+    border-radius: 10px;
+    background: rgb(131,58,180);
+    background: linear-gradient(145deg, rgba(131,58,180,1) 0%, rgba(55,31,88,1) 100%);
+}
+
+.reps-by-set > input {
+    width: 90%;
+    border: 0;
+    background-color: transparent;
+    font-size: 100%;
+    color: #F1F2F2;
+}
+
+.description {
+    font-size: 75%;
+    margin-right: 4%;
+    text-align: center;
+    padding: 1% 2%;
+    border-radius: 10px;
+    background: rgb(131,58,180);
+    background: linear-gradient(145deg, rgba(131,58,180,1) 0%, rgba(55,31,88,1) 100%);
+}
+
+.description > textarea {
+    border: none;
+    border-radius: 5px;
+    resize: none;
+    height: 95%;
+    width: 98%;
+    overflow: show;
+    background-color: transparent;
+    font-size: 100%;
+    color: #F1F2F2;
+}
+
+p {
+    text-align: left;
+    padding-left: 6%;
+    font-size: 100%;
+    color: #F1F2F2;
+    margin: 0;
+    overflow-wrap: break-word;
+}
+
+.drop-arrow-exit-done {
+    transform: rotate(0);
+}
+
+.drop-arrow-exit-done > svg{
+    transform: rotate(180deg);
+}
+
+.drop-arrow-exit-active {
+    transform: rotate(0);
+}
+
+.drop-arrow-exit-active > svg {
+    transform: rotate(180deg);
+    transition: transform 300ms;
+}
+
+.drop-arrow-enter-active {
+    transform: rotate(180deg);
+}
+
+.drop-arrow-enter-active > svg {
+    transform: rotate(180deg);
+    transition: transform 300ms;
+}
+
+.drop-arrow-enter-done {
+    transform: rotate(180deg);
+}
+
+.drop-arrow-enter-done > svg {
+    transform: rotate(180deg);
+}
+
+.menu-enter {
+    max-height: 0px;
+    -webkit-transition: max-height 1s ease;
+    overflow: hidden; 
+}
+
+.menu-enter.menu-enter-active {
+    height: auto;
+    max-height: 500px; 
+}
+
+.menu-exit {
+    max-height: 500px;
+    -webkit-transition: max-height 1s ease; 
+}
+
+.menu-exit.menu-exit-active {
+    overflow: hidden;
+    max-height: 0px; 
+}
+
+.cls-1 {
+    fill: #000;
+}
+
+.trash-can{
+    height: 15px;
+    fill: #a9a9a9;
+    text-align: center;
+}
+
+.delete-hitbox{
+    position: absolute;
+    left: -20px;
+    width: 20px;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.add-button-container {
+    padding-top: 15px;
+    text-align: center;
+}
+
+.add-button-background {
+    width: 300px;
+    height: 50px;
+    display: inline-block;
+    position: relative;
+}
+
+.add-button-background > div {
+    display: inline-block;
+    padding-top: 12.5px;
+    padding-bottom: 12.5px;
+}
+
+.add-workout {
+    text-align: center;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: aquamarine;
+    width: 150px;
+}
+
+.add-circuit {
+    text-align: center;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: aqua;
+    width: 150px;
+}
