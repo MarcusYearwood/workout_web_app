@@ -134,7 +134,7 @@ function reducer (state, action) {
         return [...state]
       }
     case ACTIONS.CHANGE_REPS:
-      console.log(getWorkoutTime(state))
+      // console.log(getWorkoutTime(state))
       target = action.payload.target
       value = target.value
       woNum = action.payload.id
@@ -156,7 +156,7 @@ function reducer (state, action) {
       }
     case ACTIONS.ADD_VARIATION:
       return state.map((object, index) => {
-        if (index === parseInt(action.payload.woNum)) {
+        if (object.id === action.payload.id) {
           return {...object, variations: [...object.variations, action.payload.variation]}
         } else {
           return object
@@ -218,6 +218,7 @@ function reducer (state, action) {
 function Form2 () {
   const [state, dispatch] = useReducer(reducer, [workoutSchema])
   const [variation, setVariation] = useState("")
+  const [showCircuitMode, toggleCircuitMode] = useState(false)
 
   function handleSubmit (e) {
     e.preventDefault()
@@ -225,7 +226,7 @@ function Form2 () {
   }
   
   const inputs = state.map((object, index) => {
-    return (<Input key={index} pname={index} dispatch={ dispatch } object={object} variation={variation} setVariation={setVariation} />)
+    return (<Input showCircuitMode={showCircuitMode} key={index} pname={index} dispatch={ dispatch } object={object} variation={variation} setVariation={setVariation} />)
   })
 
   return (<form>
@@ -233,7 +234,7 @@ function Form2 () {
       <Header />
       {inputs}
     </div>
-    <Add handleSubmit={handleSubmit} />
+    <Add handleSubmit={handleSubmit} showCircuitMode={showCircuitMode} toggleCircuitMode={toggleCircuitMode} />
   </form>)
 }
 

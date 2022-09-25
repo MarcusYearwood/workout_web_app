@@ -8,16 +8,16 @@ export default function Input (props) {
     const [showBottom, setShowBottom] = useState(false)
 
     return (
-        <>
-        <TopRowInput prop={props} setShowBottom={setShowBottom} showBottom={showBottom} />
-        <CSSTransition
-          in={showBottom}
-          classNames="menu"
-          unmountOnExit
-          timeout={1000}>
-          <BottomRowInput prop={props} variation={props.variation} setVariation={props.setVariation} />
-        </CSSTransition>
-        </>
+        <div className='workout-row'>
+            <TopRowInput showCircuitMode={props.showCircuitMode} prop={props} setShowBottom={setShowBottom} showBottom={showBottom} />
+            <CSSTransition
+                in={showBottom}
+                classNames="menu"
+                unmountOnExit
+                timeout={1000}>
+                <BottomRowInput prop={props} variation={props.variation} setVariation={props.setVariation} />
+            </CSSTransition>
+        </div>
     )
 }
 
@@ -30,11 +30,12 @@ return (<div className='row header'>
 }
 
 export function Add (props) {
+
     return (
         <div className='add-button-container'>
             <div className='add-button-background'>
                 <div onClick={props.handleSubmit} className='add-workout'>Workout</div>
-                <div className='add-circuit'>Circuit</div>
+                <div onClick={() => {props.toggleCircuitMode(!props.showCircuitMode)}} className='add-circuit'>Circuit</div>
             </div>
         </div>
     )
@@ -48,16 +49,18 @@ return (<div className='row input-row'>
     <input placeholder='exercise' name={"workout" + props.prop.object.id} type="text" value={props.prop.object.workout} onChange={(e) => props.prop.dispatch({ type: ACTIONS.CHANGE_WORKOUT, payload: { target: e.target, id: props.prop.object.id } })} className="col-5" autoComplete="off"></input>
     <input placeholder='sets' name={"sets" + props.prop.object.id} type="text" value={props.prop.object.sets} onChange={(e) => props.prop.dispatch({ type: ACTIONS.CHANGE_SETS, payload: { target: e.target, id: props.prop.object.id } })} className="col-4" autoComplete="off"></input>
     <input placeholder='reps' name={"reps"} type="text" value={props.prop.object.reps} onChange={(e) => props.prop.dispatch({ type: ACTIONS.CHANGE_REPS, payload: { target: e.target, id: props.prop.object.id } })}  className="col-3" autoComplete="off"></input>
-    <CSSTransition in={props.showBottom} timeout={1000} classNames="drop-arrow">
+    <CSSTransition in={props.showBottom} timeout={400} classNames="drop-arrow">
         <div className='dropdown-hitbox' onClick={() => props.setShowBottom(!props.showBottom)}><svg className="dropdown-triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 82.77"><defs></defs><polygon points="50 82.77 100 0 0 0 50 82.77"/></svg></div>
+    </CSSTransition>
+    <CSSTransition in={props.showCircuitMode} timeout={0} classNames="border">
+        <div></div>
     </CSSTransition>
 </div>)
 }
 
-function handleAddVariation (variation, setVariation, dispatch, woNum) {
+function handleAddVariation (variation, setVariation, dispatch, id) {
     if (variation !== "") {
-        dispatch({ type: ACTIONS.ADD_VARIATION, payload: {woNum: woNum, variation: variation} })
-        setVariation("")
+        dispatch({ type: ACTIONS.ADD_VARIATION, payload: {id: id, variation: variation} })
     }
 }
 
