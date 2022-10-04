@@ -8,4 +8,5 @@ export const ACTIONS = {
     CHANGE_REPS: 'change-reps',
     CHANGE_DESCRIPTION: 'change-description',
     CHANGE_REPS_PER_SET: 'change-reps-per-set',
+    ADD_TO_CIRCUIT: 'add-to-circuit'
   }

@@ -19,7 +19,6 @@ function newID () {
   return tryRandID
 }
 
-
 const workoutSchema = {
   workout: "",
   sets: "0",
@@ -27,7 +26,8 @@ const workoutSchema = {
   variations: [],
   description: "",
   repsBySet: [],
-  id: newID()
+  id: newID(),
+  circuitID: -1
 }
 
 function onlyNum (str) {
@@ -92,7 +92,8 @@ function reducer (state, action) {
         variations: [],
         description: "",
         repsBySet: [],
-        id: newID()
+        id: newID(),
+        circuitID: -1
       }]
     case ACTIONS.DELETE_WORKOUT:
       let id = action.payload.id
@@ -134,7 +135,7 @@ function reducer (state, action) {
         return [...state]
       }
     case ACTIONS.CHANGE_REPS:
-      // console.log(getWorkoutTime(state))
+      console.log(getWorkoutTime(state))
       target = action.payload.target
       value = target.value
       woNum = action.payload.id
@@ -210,6 +211,18 @@ function reducer (state, action) {
         } else {
           return [...state]
         }
+    case ACTIONS.ADD_TO_CIRCUIT:
+      return state.map((object) => {
+        if (object.id === action.payload.WorkoutID) {
+          if (action.payload.CircuitID === action.payload.ObjectCircuitID) {
+            return {...object, circuitID: -1}
+          } else {
+            return {...object, circuitID: action.payload.CircuitID}
+          }
+        } else {
+          return object
+        }
+      })
     default:
       return alert("there is an error")
   }
@@ -219,6 +232,7 @@ function Form2 () {
   const [state, dispatch] = useReducer(reducer, [workoutSchema])
   const [variation, setVariation] = useState("")
   const [showCircuitMode, toggleCircuitMode] = useState(false)
+  const [currentCircuitID, setCircuitID] = useState(-1)
 
   function handleSubmit (e) {
     e.preventDefault()
@@ -226,7 +240,7 @@ function Form2 () {
   }
   
   const inputs = state.map((object, index) => {
-    return (<Input showCircuitMode={showCircuitMode} key={index} pname={index} dispatch={ dispatch } object={object} variation={variation} setVariation={setVariation} />)
+    return (<Input currentCircuitID={currentCircuitID} showCircuitMode={showCircuitMode} key={index} pname={index} dispatch={ dispatch } object={object} variation={variation} setVariation={setVariation} />)
   })
 
   return (<form>
@@ -234,7 +248,7 @@ function Form2 () {
       <Header />
       {inputs}
     </div>
-    <Add handleSubmit={handleSubmit} showCircuitMode={showCircuitMode} toggleCircuitMode={toggleCircuitMode} />
+    <Add setCircuitID={setCircuitID} handleSubmit={handleSubmit} showCircuitMode={showCircuitMode} toggleCircuitMode={toggleCircuitMode} />
   </form>)
 }
 

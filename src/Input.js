@@ -9,7 +9,7 @@ export default function Input (props) {
 
     return (
         <div className='workout-row'>
-            <TopRowInput showCircuitMode={props.showCircuitMode} prop={props} setShowBottom={setShowBottom} showBottom={showBottom} />
+            <TopRowInput currentCircuitID={props.currentCircuitID} showCircuitMode={props.showCircuitMode} prop={props} setShowBottom={setShowBottom} showBottom={showBottom} />
             <CSSTransition
                 in={showBottom}
                 classNames="menu"
@@ -30,15 +30,26 @@ return (<div className='row header'>
 }
 
 export function Add (props) {
-
     return (
         <div className='add-button-container'>
             <div className='add-button-background'>
                 <div onClick={props.handleSubmit} className='add-workout'>Workout</div>
-                <div onClick={() => {props.toggleCircuitMode(!props.showCircuitMode)}} className='add-circuit'>Circuit</div>
+                <CircuitButton setCircuitID={props.setCircuitID} showCircuitMode={props.showCircuitMode} toggleCircuitMode={props.toggleCircuitMode} />
             </div>
         </div>
     )
+}
+
+function CircuitButton (props) {
+    if (props.showCircuitMode) {
+        return (<div onClick={() => {
+            props.toggleCircuitMode(!props.showCircuitMode)}} className='add-circuit end-circuit-mode-button'>Done</div>)
+    } else {
+        return (<div onClick={() => {
+            props.toggleCircuitMode(!props.showCircuitMode)
+            props.setCircuitID(newCircuitID())
+            }} className='add-circuit'>Circuit</div>)
+    }
 }
 
 function TopRowInput (props) {
@@ -52,13 +63,43 @@ return (<div className='row input-row'>
     <CSSTransition in={props.showBottom} timeout={400} classNames="drop-arrow">
         <div className='dropdown-hitbox' onClick={() => props.setShowBottom(!props.showBottom)}><svg className="dropdown-triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 82.77"><defs></defs><polygon points="50 82.77 100 0 0 0 50 82.77"/></svg></div>
     </CSSTransition>
-    <CSSTransition in={props.showCircuitMode} timeout={0} classNames="border">
-        <div></div>
-    </CSSTransition>
+    <CircuitBorder dispatch = {props.prop.dispatch} showCircuitMode = {props.showCircuitMode} object = {props.prop.object} currentCircuitID = {props.currentCircuitID} />
 </div>)
 }
 
-function handleAddVariation (variation, setVariation, dispatch, id) {
+function CircuitBorder (props) {
+    if (props.currentCircuitID === props.object.circuitID) {
+        if (props.showCircuitMode) {
+            return (
+                <div className='border-clicked' onClick={() => props.dispatch({ type: ACTIONS.ADD_TO_CIRCUIT, payload: { WorkoutID: props.object.id, CircuitID: props.currentCircuitID, ObjectCircuitID: props.object.circuitID} })}></div>
+            )
+        }
+    } else {
+        if (props.showCircuitMode) {
+            return (
+                <div className='border-unclicked' onClick={() => props.dispatch({ type: ACTIONS.ADD_TO_CIRCUIT, payload: { WorkoutID: props.object.id, CircuitID: props.currentCircuitID, ObjectCircuitID: props.object.circuitID} })}></div>
+            )
+        }
+    }
+}
+
+const circuitIDSet = new Set()
+
+// use id to label workouts. can identify by object.id cross referenced with woNum
+// this will allow for intutive deletion feature 
+function newCircuitID () {
+  const setLength = circuitIDSet.size
+  let newSetLength = circuitIDSet.size
+  let tryRandID = 0
+  while (setLength === newSetLength){
+    tryRandID = Math.floor(Math.random()*Date.now())
+    circuitIDSet.add(tryRandID)
+    newSetLength = circuitIDSet.size
+  }
+  return tryRandID
+}
+
+function handleAddVariation (variation, dispatch, id) {
     if (variation !== "") {
         dispatch({ type: ACTIONS.ADD_VARIATION, payload: {id: id, variation: variation} })
     }
