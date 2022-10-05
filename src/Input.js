@@ -6,19 +6,27 @@ import './Input.css'
 
 export default function Input (props) {
     const [showBottom, setShowBottom] = useState(false)
-
-    return (
-        <div className='workout-row'>
-            <TopRowInput currentCircuitID={props.currentCircuitID} showCircuitMode={props.showCircuitMode} prop={props} setShowBottom={setShowBottom} showBottom={showBottom} />
-            <CSSTransition
-                in={showBottom}
-                classNames="menu"
-                unmountOnExit
-                timeout={1000}>
-                <BottomRowInput prop={props} variation={props.variation} setVariation={props.setVariation} />
-            </CSSTransition>
-        </div>
-    )
+    if (props.showCircuitMode) {
+        return (
+            <div className='workout-row' name={props.object.circuitID}>
+                <TopRowInput currentCircuitID={props.currentCircuitID} showCircuitMode={props.showCircuitMode} prop={props} setShowBottom={setShowBottom} showBottom={showBottom} />
+            </div>
+        )
+    } else {
+        return (
+            <div className='workout-row' name={props.object.circuitID}>
+                <TopRowInput currentCircuitID={props.currentCircuitID} showCircuitMode={props.showCircuitMode} prop={props} setShowBottom={setShowBottom} showBottom={showBottom} />
+                <CSSTransition
+                    in={showBottom}
+                    classNames="menu"
+                    unmountOnExit
+                    timeout={1000}>
+                    <BottomRowInput prop={props} variation={props.variation} setVariation={props.setVariation} />
+                </CSSTransition>
+            </div>
+        )
+    }
+    
 }
 
 export function Header () {
@@ -60,11 +68,26 @@ return (<div className='row input-row'>
     <input placeholder='exercise' name={"workout" + props.prop.object.id} type="text" value={props.prop.object.workout} onChange={(e) => props.prop.dispatch({ type: ACTIONS.CHANGE_WORKOUT, payload: { target: e.target, id: props.prop.object.id } })} className="col-5" autoComplete="off"></input>
     <input placeholder='sets' name={"sets" + props.prop.object.id} type="text" value={props.prop.object.sets} onChange={(e) => props.prop.dispatch({ type: ACTIONS.CHANGE_SETS, payload: { target: e.target, id: props.prop.object.id } })} className="col-4" autoComplete="off"></input>
     <input placeholder='reps' name={"reps"} type="text" value={props.prop.object.reps} onChange={(e) => props.prop.dispatch({ type: ACTIONS.CHANGE_REPS, payload: { target: e.target, id: props.prop.object.id } })}  className="col-3" autoComplete="off"></input>
-    <CSSTransition in={props.showBottom} timeout={400} classNames="drop-arrow">
-        <div className='dropdown-hitbox' onClick={() => props.setShowBottom(!props.showBottom)}><svg className="dropdown-triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 82.77"><defs></defs><polygon points="50 82.77 100 0 0 0 50 82.77"/></svg></div>
-    </CSSTransition>
+    <DropDownArrow showCircuitMode = {props.showCircuitMode} showBottom={props.showBottom} setShowBottom={props.setShowBottom} />
     <CircuitBorder dispatch = {props.prop.dispatch} showCircuitMode = {props.showCircuitMode} object = {props.prop.object} currentCircuitID = {props.currentCircuitID} />
 </div>)
+}
+
+function DropDownArrow (props) {
+    if (props.showCircuitMode) {
+        props.setShowBottom(false)
+        return(
+            <CSSTransition in={props.showBottom} timeout={400} classNames="drop-arrow">
+                <div className='dropdown-hitbox' ><svg className="dropdown-triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 82.77"><defs></defs><polygon points="50 82.77 100 0 0 0 50 82.77"/></svg></div>
+            </CSSTransition>
+        )
+    } else {
+        return(
+            <CSSTransition in={props.showBottom} timeout={400} classNames="drop-arrow">
+                <div className='dropdown-hitbox' onClick={() => props.setShowBottom(!props.showBottom)}><svg className="dropdown-triangle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 82.77"><defs></defs><polygon points="50 82.77 100 0 0 0 50 82.77"/></svg></div>
+            </CSSTransition>
+        )
+    }
 }
 
 function CircuitBorder (props) {
@@ -113,7 +136,7 @@ function BottomRowInput (props) {
             {props.prop.object.variations.map((element, index) => <p key={index} className={index + "." + props.prop.object.id} onClick={(e) => props.prop.dispatch({ type: ACTIONS.DELETE_VARIATION, payload: {target: e.target} })} name={props.prop.object.id + index}>{element}</p>)}
         </div>
         <input name={'add-variation'+props.prop.object.id} value={props.variation} onChange={(e) => props.setVariation(e.target.value)} className='add-variation' autoComplete='off' type="text"></input>
-        <div name={props.prop.object.id} className='add-hitbox' onClick={() => handleAddVariation(props.variation, props.setVariation, props.prop.dispatch, props.prop.object.id)} >
+        <div name={props.prop.object.id} className='add-hitbox' onClick={() => handleAddVariation(props.variation, props.prop.dispatch, props.prop.object.id)} >
             <svg name={props.prop.object.id} className='add-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect name={props.prop.object.id} x="39.63" width="23.77" height="100" rx="11.88" ry="11.88"/><rect className='add-icon-inner' x="38.02" y="0" width="23.77" height="100" rx="11.88" ry="11.88" transform="translate(99.9 .1) rotate(90)"/></svg>
         </div>
     </div>

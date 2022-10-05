@@ -196,23 +196,23 @@ function reducer (state, action) {
       [indexOfSet, woNum] = name.split(".").map(element => parseInt(element))
       newChar = value.slice(-1)
       if (onlyNum(value)) {
-        if (!newChar) {
-          value = "0"
-        }
-        return state.map((object, index) => {
-          if (object.id === woNum) {
-            value = removeZeros(value)
-            object.repsBySet[indexOfSet] = value;
-            return {...object, repsBySet: [...object.repsBySet]}
-          } else {
-            return object
+          if (!newChar) {
+            value = "0"
           }
-        })
+          return state.map((object) => {
+            if (object.id === woNum) {
+              value = removeZeros(value)
+              object.repsBySet[indexOfSet] = value;
+              return {...object, repsBySet: [...object.repsBySet]}
+            } else {
+              return object
+            }
+          })
         } else {
           return [...state]
         }
     case ACTIONS.ADD_TO_CIRCUIT:
-      return state.map((object) => {
+      let changedState = state.map((object) => {
         if (object.id === action.payload.WorkoutID) {
           if (action.payload.CircuitID === action.payload.ObjectCircuitID) {
             return {...object, circuitID: -1}
@@ -223,6 +223,22 @@ function reducer (state, action) {
           return object
         }
       })
+
+      // put circuits next to eachother
+      for (let i = 0; i < changedState.length - 1; i ++) {
+        if (changedState[i].circuitID !== changedState[i + 1].circuitID && changedState[i].circuitID !== -1){
+          for (let k = i + 1; k < changedState.length; k ++) {
+            if (changedState[i].circuitID === changedState[k].circuitID){
+              // console.log("current element: " + i)
+              // console.log("element to swap: " + k)
+              let temp = changedState[i + 1]
+              changedState[i + 1] = changedState[k]
+              changedState[k] = temp
+            }
+          }
+        }
+      }
+      return [...changedState]
     default:
       return alert("there is an error")
   }

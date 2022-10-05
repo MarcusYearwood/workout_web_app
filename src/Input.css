@@ -1,3 +1,5 @@
+
+/* BOTTOM ROW - dropdown stuff */
 .dropdown-triangle {
     position: relative;
     fill: #F1F2F2;
@@ -15,6 +17,7 @@
     height: 25px;
 }
 
+/* BOTTOM ROW - header stuff */
 .header > h1 {
     text-align: left;
     padding: 0;
@@ -22,6 +25,7 @@
     color: #E9F1F2;
 }
 
+/* BOTTOM ROW - input row stuff */
 .input-row {
     margin-top: 5%;
     height: 30px;
@@ -43,6 +47,7 @@
     background-clip: content-box;
 }
 
+/* BOTTOM ROW - variations stuff */
 .variations {
     position: relative;
     text-align: center;
@@ -57,8 +62,6 @@
 
 .variations > input {
     border: 0;
-    /* padding-left: 0;
-    padding-right: 5%; */
     font-size: 100%;
     color: #F1F2F2;
 }
@@ -95,6 +98,7 @@
     fill:#F1F2F2;
 }
 
+/* BOTTOM ROW - reps for each set stuff */
 .reps-by-set {
     padding: 1% 2.1%;
     border-radius: 10px;
@@ -110,6 +114,7 @@
     color: #F1F2F2;
 }
 
+/* BOTTOM ROW - description stuff */
 .description {
     font-size: 75%;
     margin-right: 4%;
@@ -132,6 +137,7 @@
     color: #F1F2F2;
 }
 
+/* general font stuff */
 p {
     text-align: left;
     padding-left: 6%;
@@ -141,6 +147,7 @@ p {
     overflow-wrap: break-word;
 }
 
+/* dropdown arrow animation */
 .drop-arrow-exit-done {
     transform: rotate(0);
 }
@@ -175,7 +182,7 @@ p {
     transform: rotate(180deg);
 }
 
-/* enter */
+/* BOTTOM ROW - DROPDOWN ANIMATION - enter */
 .menu-enter {
     overflow: hidden; 
     transform: scaleY(0);
@@ -194,7 +201,7 @@ p {
     transform: scaleY(1);
 }
 
-/* exit */
+/* BOTTOM ROW - DROPDOWN ANIMATION - exit */
 .menu-exit {
     max-height: 1000px;
 }
@@ -268,6 +275,8 @@ p {
     border: 4px solid #FF934F;
     box-shadow: 1px 3px 3px #000000;
     border-radius: 70px;
+    width: 100%;
+    height: 40px;
 }
 
 .border-unclicked:hover {
@@ -278,18 +287,16 @@ p {
     background-color: rgba(170,170,170,0.5);
 }
 
+@media screen and (min-width: 1620px){
+    
+}
+
 @media screen and (max-width: 1620px) and (min-width: 500px){
-    .border-unclicked, .border-clicked{
-        width: 100%;
-        height: 40px;
-    }
+    
 }
 
 @media screen and (max-width: 500px){
-    .border-unclicked, .border-clicked{
-        width: 100%;
-        height: 40px;
-    }
+   
 }
 
 .workout-row {
